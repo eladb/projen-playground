@@ -1,5 +1,5 @@
 {
-  "name": "new-name",
+  "name": "new-name-2",
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
