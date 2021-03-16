@@ -1,5 +1,5 @@
 {
-  "name": "experiment-projen-self-mutation",
+  "name": "new-name",
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
