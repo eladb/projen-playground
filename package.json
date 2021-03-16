@@ -1,5 +1,6 @@
 {
   "name": "new-name-2",
+  "description": "changing the description",
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
