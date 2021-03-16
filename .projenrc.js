@@ -2,7 +2,7 @@ const { NodeProject } = require('projen');
 
 const project = new NodeProject({
   defaultReleaseBranch: 'main',
-  name: 'experiment-projen-self-mutation',
+  name: 'new-name',
 });
 
 const workflow = project.github.addWorkflow('SelfMutate');
