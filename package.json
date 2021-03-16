@@ -1,5 +1,6 @@
 {
   "name": "new-name",
+  "description": "description of my package",
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
