@@ -32,7 +32,7 @@ workflow.addJobs({
       },
       {
         name: 'Commit changes',
-        run: `git diff --exit-code && git commit -am "update generated files"`,
+        run: `git diff --exit-code || git commit -am "update generated files"`,
       },
       {
         name: 'Push commits',

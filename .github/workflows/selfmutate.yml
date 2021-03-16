@@ -22,6 +22,6 @@ jobs:
       - name: Build
         run: npx projen build
       - name: Commit changes
-        run: git diff --exit-code && git commit -am "update generated files"
+        run: git diff --exit-code || git commit -am "update generated files"
       - name: Push commits
         run: git push origin $GITHUB_REF
