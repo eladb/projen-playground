@@ -3,12 +3,11 @@
 name: SelfMutate
 on:
   push: {}
-  workflow_dispatch: {}
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     env:
-      CI: "true"
+      CI: true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,17 +17,11 @@ jobs:
         run: npx projen
       - name: Set git identity
         run: |-
-          git config user.name "Auto-bump"
+          git config user.name "Self Mutate"
           git config user.email "github-actions@github.com"
       - name: Build
         run: npx projen build
       - name: Commit changes
-        run: 'git commit -am "chore: update generated files"'
+        run: git diff --exit-code && git commit -am "update generated files"
       - name: Push commits
-        run: git push origin $BRANCH
-        env:
-          BRANCH: $GITHUB_REF
-      - name: Push tags
-        run: git push --follow-tags origin $BRANCH
-        env:
-          BRANCH: $GITHUB_REF
+        run: git push origin $GITHUB_REF
