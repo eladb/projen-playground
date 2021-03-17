@@ -10,23 +10,11 @@ jobs:
     steps:
       - uses: hmarr/debug-action@v2
 
-      - name: Get pull request branch
-        id: query_pull_request
-        env:
-          PULL_REQUEST_URL: ${{ github.event.issue.pull_request.url }}
-        run: |-
-          rm -f /tmp/pr.json
-          curl --silent $PULL_REQUEST_URL > /tmp/pr.json
-          BRANCH_STR=$(cat /tmp/pr.json | jq ".head.ref")
-          REPO_NAME=$(cat /tmp/pr.json | jq ".head.repo.full_name")
-          echo "::set-output name=branch::$(node -p $BRANCH_STR)"
-          echo "::set-output name=repo::$(node -p $REPO_NAME)"
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ steps.query_pull_request.outputs.branch }}
-          repository: ${{ steps.query_pull_request.outputs.repo }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.repo.full_name }}
 
       - run: |-
           git config user.name "GitHub"
