@@ -23,5 +23,4 @@ jobs:
           git config user.name "GitHub"
           git config user.email "github-actions@github.com"
           
-      - run: git diff --exit-code || git commit -am "update generated files"      
-      - run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
+      - run: git diff --exit-code || (git commit -am "update generated files" && git push origin HEAD:${{ github.event.pull_request.head.ref }})
