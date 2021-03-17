@@ -15,8 +15,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+          token: ${{ secrets.PROJEN_MUTATION }}
 
       - name: Build
         run: ./build.sh
@@ -25,11 +24,5 @@ jobs:
           git config user.name "GitHub"
           git config user.email "github-actions@github.com"
           
-      - run: git diff --exit-code || git commit -am "update generated files"
-      
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - run: git diff --exit-code || git commit -am "update generated files"      
+      - run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
