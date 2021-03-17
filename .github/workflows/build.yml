@@ -7,19 +7,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      CI: "true"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set git identity
-        run: |-
-          git config user.name "Auto-bump"
+      - uses: actions/checkout@v2
+      - uses: hmarr/debug-action@v2
+      - run: |-
+          git config user.name "GitHub"
           git config user.email "github-actions@github.com"
-
-      - name: Commit changes
-        run: git diff --exit-code || git commit -am "update generated files"
-      
-      - name: Push commits
-        run: git push origin HEAD:$GITHUB_REF
+      - run: git diff --exit-code || git commit -am "update generated files"
+      - run: git push origin HEAD:$GITHUB_REF
