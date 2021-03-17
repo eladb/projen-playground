@@ -14,7 +14,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.repo.full_name }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ secrets.PROJEN_MUTATION }}
 
       - name: Build
         run: ./build.sh
@@ -23,9 +24,5 @@ jobs:
           git config user.name "GitHub"
           git config user.email "github-actions@github.com"
           
-      - run: git diff --exit-code || git commit -am "update generated files"
-      
-      - name: Push commits
-        run: git push origin $BRANCH
-        env:
-          BRANCH: ${{ github.event.pull_request.head.ref }}
+      - run: git diff --exit-code || git commit -am "update generated files"      
+      - run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
