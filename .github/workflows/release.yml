@@ -48,7 +48,7 @@ jobs:
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Upload artifact
-        if: steps.skip.outputs.skip_release == "false"
+        if: steps.skip.outputs.skip_release == 'false'
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
