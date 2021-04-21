@@ -1,1 +1,3 @@
-# This is my projen playground
+# Projen Playground
+
+This repository is used for playing with Projen features.
