@@ -32,7 +32,7 @@ jobs:
         id: skip
         run: |
           SKIP_RELEASE="true"
-          if [ "$(git ls-remote origin -h ${{ gihub.ref }} | cut -f1)" == "${{ github.sha }}" ]; then
+          if [ "$(git ls-remote origin -h ${{ github.ref }} | cut -f1)" == "${{ github.sha }}" ]; then
             SKIP_RELEASE="false"
           fi
           echo "::set-output name=skip_release::$SKIP_RELEASE"
