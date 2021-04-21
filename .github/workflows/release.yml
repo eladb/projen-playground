@@ -37,7 +37,7 @@ jobs:
           fi
           echo "::set-output name=skip_release::$SKIP_RELEASE"
       - name: Create release
-        if: steps.skip.outputs.skip_release == "false"
+        if: steps.skip.outputs.skip_release == 'false'
         run: gh release create v$(node -p "require('./package.json').version") -F
           ./CHANGELOG.md -t v$(node -p "require('./package.json').version")
           ./dist/*/**
