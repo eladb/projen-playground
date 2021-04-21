@@ -4,6 +4,6 @@ export class Hello {
   }
 
   public sayGoodbye() {
-    return 'Goodbye, dude, See you later! V1';
+    return 'Goodbye, dude, See you later! V2';
   }
 }
