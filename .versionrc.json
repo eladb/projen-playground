@@ -3,6 +3,7 @@
   "bumpFiles": [
     "package.json"
   ],
+  "header": "",
   "commitAll": false,
   "infile": "changelog.tmp.md",
   "skip": {
