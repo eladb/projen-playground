@@ -4,7 +4,7 @@ const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   projenDuringBuild: false,
   name: 'projen-playground',
-  description: 'hello, projen',
-});
+  description: 'hello, projen'
+})
 
 project.synth();
