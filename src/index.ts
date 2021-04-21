@@ -1,6 +1,6 @@
 export class Hello {
   public sayHello() {
-    return 'hello, world!';
+    return 'hello, world! change B';
   }
 
   public sayGoodbye() {
