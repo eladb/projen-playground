@@ -28,16 +28,18 @@ jobs:
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Fail if there are new commits
-        id: skip
-        run: |
-          SKIP_RELEASE="true"
+      - name: Check for new commits
+        id: check_commits
+        run: >-
+          RESULT="true"
+
           if [ "$(git ls-remote origin -h ${{ github.ref }} | cut -f1)" == "${{ github.sha }}" ]; then
-            SKIP_RELEASE="false"
+            RESULT="false"
           fi
-          echo "::set-output name=skip_release::$SKIP_RELEASE"
+
+          echo "::set-output name=skip_release::$RESULT"
       - name: Create release
-        if: steps.skip.outputs.skip_release == 'false'
+        if: steps.check_commits.outputs.skip_release == 'false'
         run: gh release create v$(node -p "require('./package.json').version") -F
           ./CHANGELOG.md -t v$(node -p "require('./package.json').version")
           ./dist/*/**
@@ -45,11 +47,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
         run: npx projen unbump
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Upload artifact
-        if: steps.skip.outputs.skip_release == 'false'
+        if: steps.check_commits.outputs.skip_release == 'false'
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
