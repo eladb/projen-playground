@@ -10,6 +10,7 @@ jobs:
     env:
       CI: "true"
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
         with:
