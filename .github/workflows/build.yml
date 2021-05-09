@@ -21,19 +21,12 @@ jobs:
         run: |-
           git config user.name "Automation"
           git config user.email "github-actions@github.com"
-
       - name: Build
         run: npx projen build
-
-      - name: Check for changes
-        id: git_diff
-        run: git diff --exit-code || echo "::set-output name=has_changes::true"
-
-      - name: Commit and push changes
-        if: steps.git_diff.outputs.has_changes
-        run: 'git add . && git commit -m "chore: self mutation" && git push origin HEAD:${{ github.event.pull_request.head.ref }}'
-
-      - if: ${{ steps.git_diff.outputs.result && (github.repository == github.event.pull_request.head.repo.full_name) }}
+      - name: Commit and push changes (if any)
+        run: 'git diff --exit-code || (git add . && git commit -m "chore: self mutation"
+          && git push origin HEAD:${{ github.event.pull_request.head.ref }})'
+      - if: ${{ github.repository == github.event.pull_request.head.repo.full_name }}
         name: Update status check
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
