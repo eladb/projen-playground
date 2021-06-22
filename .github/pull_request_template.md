@@ -1,1 +1,5 @@
+---
+labels: "automerge"
+---
+
 Fixes #
