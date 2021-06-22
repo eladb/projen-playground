@@ -7,22 +7,32 @@ const project = new TypeScriptProject({
   description: 'hello, projen2',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   mergify: false,
-  autoApproveOptions: {
-    allowedUsernames: ['eladb'],
-    secret: 'GITHUB_TOKEN',
-    label: 'automerge',
+});
+
+const autolabel = project.github.addWorkflow('automerge-label');
+autolabel.on({ pullRequestTarget: {} });
+autolabel.addJobs({
+  add_merge_label: {
+    runsOn: 'ubuntu-latest',
+    permissions: {
+      pullRequests: JobPermission.WRITE,
+    },
+    steps: [
+      { run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge' },
+    ],
   },
 });
 
-const workflow = project.github.addWorkflow('automerge');
-workflow.on({
+const automerge = project.github.addWorkflow('automerge');
+
+automerge.on({
   pullRequest: { types: ['labeled', 'unlabeled', 'synchronize', 'opened', 'edited', 'ready_for_review', 'reopened', 'unlabeled'] },
   pullRequestReview: { types: ['submitted'] },
   checkSuite: { types: ['completed'] },
   status: {},
 });
 
-workflow.addJobs({
+automerge.addJobs({
   automerge: {
     runsOn: 'ubuntu-latest',
     permissions: {
