@@ -1,6 +1,6 @@
 {
   "name": "projen-playground",
-  "description": "hello, projen!",
+  "description": "hello, projen2",
   "scripts": {
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",

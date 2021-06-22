@@ -18,7 +18,12 @@ autolabel.addJobs({
       pullRequests: JobPermission.WRITE,
     },
     steps: [
-      { run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge' },
+      {
+        run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge',
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      },
     ],
   },
 });
