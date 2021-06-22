@@ -6,6 +6,7 @@ const project = new TypeScriptProject({
   name: 'projen-playground',
   description: 'hello, projen',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+  mergify: false,
   autoApproveOptions: {
     secret: 'GITHUB_TOKEN',
     label: 'automerge',
