@@ -19,7 +19,7 @@ autolabel.addJobs({
     },
     steps: [
       {
-        run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge --repo ${{ github.event.pull_request.owner }}/${{ github.event.pull_request.repo }}',
+        run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge --repo ${{ github.repository.full_name }}',
         env: {
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
         },
