@@ -21,7 +21,7 @@ autolabel.addJobs({
       {
         run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge --repo ${{ github.event.repository.full_name }}',
         env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          GITHUB_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
         },
       },
     ],
@@ -52,7 +52,7 @@ automerge.addJobs({
         uses: 'pascalgn/automerge-action@v0.14.2',
         env: {
           MERGE_METHOD: 'squash',
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          GITHUB_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
           MERGE_COMMIT_MESSAGE: 'pull-request-title-and-description',
           MERGE_COMMIT_MESSAGE_REGEX: '(.*)^---',
           MERGE_DELETE_BRANCH: 'true',
