@@ -8,6 +8,7 @@ const project = new TypeScriptProject({
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   mergify: false,
   autoApproveOptions: {
+    allowedUsernames: ['eladb'],
     secret: 'GITHUB_TOKEN',
     label: 'automerge',
   },
