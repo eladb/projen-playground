@@ -4,7 +4,7 @@ const { JobPermission } = require('projen/lib/github/workflows-model');
 const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'projen-playground',
-  description: 'hello, projen4',
+  description: 'hello, projen3',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   mergify: false,
 });
