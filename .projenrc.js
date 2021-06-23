@@ -33,9 +33,6 @@ const automerge = project.github.addWorkflow('automerge');
 
 automerge.on({
   pullRequestTarget: { types: ['labeled', 'unlabeled', 'synchronize', 'opened', 'edited', 'ready_for_review', 'reopened', 'unlabeled'] },
-  pullRequestReview: { types: ['submitted'] },
-  checkRun: { types: ['completed'] },
-  status: {},
 });
 
 automerge.addJobs({

@@ -12,13 +12,6 @@ on:
       - ready_for_review
       - reopened
       - unlabeled
-  pull_request_review:
-    types:
-      - submitted
-  check_run:
-    types:
-      - completed
-  status: {}
 jobs:
   automerge:
     runs-on: ubuntu-latest
