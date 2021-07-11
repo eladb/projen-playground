@@ -6,6 +6,6 @@ jobs:
   auto-assign:
     runs-on: ubuntu-latest
     steps:
-      - run: gh issue edit ${{ github.event.issue.number }} --add-assignee eladb
+      - run: gh issue edit ${{ github.event.issue.number }} --add-assignee eladb --repo ${{ github.event.repository.full_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
