@@ -10,5 +10,6 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     if: needs.job1.outputs.git_remote.outputs.latest_commit == github.sha
+    needs: [job1]
     steps:
       - run: echo "hello"
