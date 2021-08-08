@@ -4,6 +4,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2.3.4
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{ github.ref }} | cut -f1)"
