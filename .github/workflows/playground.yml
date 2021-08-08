@@ -1,14 +1,14 @@
 name: Playground
 on: [push]
 jobs:
-  release:
+  job1:
     runs-on: ubuntu-latest
     steps:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{ github.ref }} | cut -f1)"
-  test:
+  job2:
     runs-on: ubuntu-latest
-    if: steps.git_remote.outputs.latest_commit == github.sha
+    if: needs.job1.outputs.git_remote.outputs.latest_commit == github.sha
     steps:
       - run: echo "hello"
