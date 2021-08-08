@@ -4,7 +4,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     outputs:
-      latest_commit: steps.git_remote.outputs.latest_commit
+      latest_commit: ${{ steps.git_remote.outputs.latest_commit }}
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Check for new commits
