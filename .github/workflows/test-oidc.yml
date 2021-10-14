@@ -4,6 +4,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@9aaa1daa91b40ce855e24cd45fb39b2ca18aeaf1
