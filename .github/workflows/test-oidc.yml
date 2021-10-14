@@ -13,6 +13,6 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::585695036304:role/ProjenPlaygroundGitHubRole
-          role-session-name: MySessionName
+          role-session-name: FooBar
       - run: echo "hi"
       
