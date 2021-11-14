@@ -6,8 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: task_condition
-        run: echo "do something" && echo "::set-output name=success::true"
-      - if: steps.task_condition.outputs.success
+        run: echo "do something"
+        continue-on-error: true
+        
+      - if: steps.task_condition.conclusion == "success"
         run: echo "conditional1"
-      - if: steps.task_condition.outputs.success
+
+      - if: steps.task_condition.conclusion == "success"
         run: echo "conditional2"
