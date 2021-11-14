@@ -8,6 +8,6 @@ jobs:
       - id: task_condition
         run: echo "do something" && echo "::set-output name=success::true"
       - if: steps.task_condition.outputs.success
-        run: "conditional1"
+        run: echo "conditional1"
       - if: steps.task_condition.outputs.success
-        run: "conditional2"
+        run: echo "conditional2"
