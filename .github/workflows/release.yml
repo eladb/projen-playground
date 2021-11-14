@@ -26,8 +26,49 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: release
-        run: npx projen release
+      - env:
+          RELEASE: "true"
+        name: release
+        run: rm -fr dist
+      - id: should_release_bump
+        run: '! git log --oneline -1 | grep -q "chore(release):"'
+        continueOnError: true
+      - if: steps.should_release_bump.outcome == 'success'
+        env:
+          OUTFILE: package.json
+          CHANGELOG: dist/changelog.md
+          BUMPFILE: dist/version.txt
+          RELEASETAG: dist/releasetag.txt
+        name: release » bump
+        run: /Users/benisrae/.nvm/versions/node/v14.17.0/bin/node
+          /Users/benisrae/code/projen2/lib/release/bump-version.task.js
+      - name: release » build » default
+        run: node .projenrc.js
+      - name: release » build » compile
+        run: tsc --build
+      - name: release » build » test
+        run: jest --passWithNoTests --all --updateSnapshot
+      - name: release » build » test » eslint
+        run: eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test
+          build-tools .projenrc.js
+      - name: release » build » package
+        run: mkdir -p dist/js
+      - name: release » build » package
+        run: yarn pack
+      - name: release » build » package
+        run: mv *.tgz dist/js/
+      - env:
+          OUTFILE: package.json
+          CHANGELOG: dist/changelog.md
+          BUMPFILE: dist/version.txt
+          RELEASETAG: dist/releasetag.txt
+        name: release » unbump
+        run: /Users/benisrae/.nvm/versions/node/v14.17.0/bin/node
+          /Users/benisrae/code/projen2/lib/release/reset-version.task.js
+      - env:
+          RELEASE: "true"
+        name: release
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
