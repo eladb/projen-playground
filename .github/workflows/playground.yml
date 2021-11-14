@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: task_condition
-        run: echo "do something"
+        run: false
         continue-on-error: true
         
       - if: steps.task_condition.conclusion == 'success'
