@@ -1,0 +1,13 @@
+name: Playground
+on:
+  workflow_dispatch: {}
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - id: task_condition
+        run: echo "do something" && echo "set-output name=success::true"
+      - if: steps.task_condition.outputs.success
+        run: "conditional1"
+      - if: steps.task_condition.outputs.success
+        run: "conditional2"
