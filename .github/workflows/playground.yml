@@ -9,8 +9,8 @@ jobs:
         run: false
         continue-on-error: true
         
-      - if: steps.task_condition.conclusion == 'success'
+      - if: steps.task_condition.outcome == 'success'
         run: echo "conditional1"
 
-      - if: steps.task_condition.conclusion == 'success'
+      - if: steps.task_condition.outcome == 'success'
         run: echo "conditional2"
