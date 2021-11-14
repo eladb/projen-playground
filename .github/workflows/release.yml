@@ -30,18 +30,7 @@ jobs:
           RELEASE: "true"
         name: release
         run: rm -fr dist
-      - id: should_release_bump
-        run: '! git log --oneline -1 | grep -q "chore(release):"'
-        continue-on-error: true
-      - if: steps.should_release_bump.outcome == 'success'
-        env:
-          OUTFILE: package.json
-          CHANGELOG: dist/changelog.md
-          BUMPFILE: dist/version.txt
-          RELEASETAG: dist/releasetag.txt
-        name: release » bump
-        run: /Users/benisrae/.nvm/versions/node/v14.17.0/bin/node
-          /Users/benisrae/code/projen2/lib/release/bump-version.task.js
+      - run: npx projen bump
       - name: release » build » default
         run: node .projenrc.js
       - name: release » build » compile
@@ -57,14 +46,7 @@ jobs:
         run: yarn pack
       - name: release » build » package
         run: mv *.tgz dist/js/
-      - env:
-          OUTFILE: package.json
-          CHANGELOG: dist/changelog.md
-          BUMPFILE: dist/version.txt
-          RELEASETAG: dist/releasetag.txt
-        name: release » unbump
-        run: /Users/benisrae/.nvm/versions/node/v14.17.0/bin/node
-          /Users/benisrae/code/projen2/lib/release/reset-version.task.js
+      - run: npx projen unbump
       - env:
           RELEASE: "true"
         name: release
