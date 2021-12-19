@@ -4,14 +4,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@9aaa1daa91b40ce855e24cd45fb39b2ca18aeaf1
+      - uses: actions/setup-python@v2
         with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::585695036304:role/ProjenPlaygroundGitHubRole
-          role-session-name: FooBar
-      - run: echo "hi"
-      
+          python-version: 3
