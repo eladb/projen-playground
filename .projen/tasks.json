@@ -104,10 +104,10 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "mkdir -p dist/js"
+          "exec": "mkdir -p dist"
         },
         {
-          "exec": "mv $(npm pack) dist/js/"
+          "exec": "mv $(npm pack) dist/"
         }
       ]
     },
