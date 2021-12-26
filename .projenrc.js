@@ -7,6 +7,7 @@ const project = new typescript.TypeScriptProject({
 
   releaseToNpm: true,
   npmRegistryUrl: 'http://npm.pkg.github.com/',
+  minNodeVersion: '14.0.0',
 });
 
 project.synth();
