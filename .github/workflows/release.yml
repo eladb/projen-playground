@@ -22,35 +22,13 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - env:
-          RELEASE: "true"
-        name: release
-        run: rm -fr dist
-      - run: npx projen bump
-      - name: release » build » default
-        run: node .projenrc.js
-      - name: release » build » compile
-        run: tsc --build
-      - name: release » build » test
-        run: jest --passWithNoTests --all --updateSnapshot
-      - name: release » build » test » eslint
-        run: eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test
-          build-tools .projenrc.js
-      - name: release » build » package
-        run: mkdir -p dist/js
-      - name: release » build » package
-        run: yarn pack
-      - name: release » build » package
-        run: mv *.tgz dist/js/
-      - run: npx projen unbump
-      - env:
-          RELEASE: "true"
-        name: release
-        run: git diff --ignore-space-at-eol --exit-code
+      - name: release
+        run: npx projen release
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
@@ -69,6 +47,9 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
