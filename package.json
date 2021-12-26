@@ -1,5 +1,9 @@
 {
-  "name": "projen-playground",
+  "name": "@eladb/projen-playground",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eladb/projen-playground.git"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
@@ -41,6 +45,9 @@
   "bundledDependencies": [],
   "main": "lib/index.js",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "http://npm.pkg.github.com/"
+  },
   "version": "0.0.0",
   "jest": {
     "testMatch": [
