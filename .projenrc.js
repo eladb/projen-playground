@@ -20,7 +20,7 @@ class UpgradePatch extends Component {
     upgradeWorkflow.addOverride('jobs.pr.steps.5', {
       name: 'Trigger build workflow',
       if: "steps.create-pr.outputs.pull-request-url != ''",
-      run: 'curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches -d "{\\"ref\\":\\"$(git rev-parse HEAD)\\"}"',
+      run: 'curl --fail -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches -d "{\\"ref\\":\\"$GITHUB_REF\\"}"',
     });
     upgradeWorkflow.synthesize();
   }
