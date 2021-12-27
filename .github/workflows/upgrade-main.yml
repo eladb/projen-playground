@@ -104,5 +104,5 @@ jobs:
           "Authorization: token ${GITHUB_TOKEN}"
           https://api.github.com/repos/${{ github.repository
           }}/actions/workflows/build.yml/dispatches -d
-          "{\"ref\":\"$GITHUB_REF\"}"'
+          "{\"ref\":\"$GITHUB_REF_NAME\"}"'
         if: steps.create-pr.outputs.pull-request-url != ''
