@@ -34,6 +34,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          branch: ${{ github.ref }}
           github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           
 #          git remote set-url origin https://${GITHUB_ACTOR}:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git
