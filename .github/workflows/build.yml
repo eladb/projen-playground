@@ -13,6 +13,7 @@ jobs:
       self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
     env:
       CI: "true"
+      TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,41 +25,10 @@ jobs:
           git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
-        with:
-          node-version: 16.0.0
-      - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
-      - name: build
-        run: npx projen build
+      - run: echo "foo" > foo.txt
       - name: Self mutation
         id: self_mutation
         run: |-
-          if ! git diff --exit-code; then
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
-          fi
-  update-status:
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      actions: write
-    if: ${{ needs.build.outputs.self_mutation_commit }}
-    steps:
-      - name: Update status check (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="${{
-          needs.build.outputs.self_mutation_commit }}" -F status="completed" -F
-          conclusion="success"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git add .
+          git commit -m "chore: self mutation"
+          git push $GITHUB_ACTOR:$TOKEN@https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
