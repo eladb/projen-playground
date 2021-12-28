@@ -31,4 +31,4 @@ jobs:
         run: |-
           git add .
           git commit -m "chore: self mutation"
-          git push $GITHUB_ACTOR:$TOKEN@https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
+          git push https://${GITHUB_ACTOR}:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
