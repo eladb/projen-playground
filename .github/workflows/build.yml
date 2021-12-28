@@ -31,4 +31,5 @@ jobs:
         run: |-
           git add .
           git commit -m "chore: self mutation"
-          git push https://${GITHUB_ACTOR}:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
+          git remote set-url origin https://${GITHUB_ACTOR}:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
