@@ -3,6 +3,7 @@
 name: build
 on:
   pull_request: {}
+  push: {}
   workflow_dispatch: {}
 jobs:
   build:
@@ -18,29 +19,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.ref_name }}
+          repository: ${{ github.repository }}
       - name: Set git identity
         run: |-
           git config --global init.defaultBranch main
           git config user.name "Elad Ben-Israel"
           git config user.email "elad.benisrael@gmail.com"
-      - run: echo "foo446" > foo.txt
+      - run: echo "foo446Hello" > foo.txt
       - name: Self mutation
         id: self_mutation
         run: |-
           git add .
           git commit -m "chore: self mutation"
-      - run: -|
-          git config --list || echo "no local"
-          git config --list --global || echo "no global"
-          git config --list --system || echo "no system"
       - name: push
-        run: git push https://boom:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
-
-#      - name: Push changes
-#        uses: ad-m/github-push-action@master
-#        with:
-#          branch: ${{ github.event.pull_request.head.ref }}
-#          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
-          
+        run: git push https://boom:${TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
