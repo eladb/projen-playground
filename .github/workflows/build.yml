@@ -18,24 +18,8 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
-      - run: echo "foo446HelloBOOMBOOM1" > foo.txt
-      - run: |-
-          git config --unset "http.@.extraheader" || echo "error"
-          git config --global --unset "http.@.extraheader" || echo "error"
-          git config --remove-section "http" || echo "error"
-          git config --remove-section "http" --global || echo "error"
-      - run: |-
-           cd /home/runner/work/_temp
-           for f in *; do
-             if [ ! -d $f ]; then
-               echo "------ $f"
-               cat $f
-             fi
-           done
-      - run: |-
-          git config --list || echo "error"
-          git config --list --global || echo "error"
-          git config --list --system || echo "error"
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+      - run: echo "foo446HelloBOOMBOOM2" > foo.txt
       - run: |-
           if ! git diff --exit-code; then
             git config --global init.defaultBranch main
@@ -43,5 +27,5 @@ jobs:
             git config user.email "elad.benisrael@gmail.com"
             git add .
             git commit -m "chore: self mutation"
-            git push https://boom:${TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+            git push origin HEAD:${{ github.ref_name }}
           fi
