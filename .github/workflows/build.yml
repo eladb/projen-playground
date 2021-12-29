@@ -31,6 +31,10 @@ jobs:
         run: |-
           git add .
           git commit -m "chore: self mutation"
+      - run: -|
+          git config --list || echo "no local"
+          git config --list --global || echo "no global"
+          git config --list --system || echo "no system"
       - name: push
         run: git push https://boom:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
 
