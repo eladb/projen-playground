@@ -2,7 +2,6 @@
 
 name: build
 on:
-  pull_request: {}
   push: {}
   workflow_dispatch: {}
 jobs:
@@ -19,16 +18,14 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name "Elad Ben-Israel"
-          git config user.email "elad.benisrael@gmail.com"
-      - run: echo "foo446Hello" > foo.txt
-      - name: Self mutation
-        id: self_mutation
-        run: |-
-          git add .
-          git commit -m "chore: self mutation"
-      - name: push
-        run: git push https://boom:${TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+      - run: echo "foo446HelloBOOMBOOM2" > foo.txt
+      - run: |-
+          if ! git diff --exit-code; then
+            git config --global init.defaultBranch main
+            git config user.name "Elad Ben-Israel"
+            git config user.email "elad.benisrael@gmail.com"
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
