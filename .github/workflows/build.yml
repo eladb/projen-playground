@@ -19,6 +19,7 @@ jobs:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
       - run: echo "foo446HelloBOOMBOOM1" > foo.txt
+      - run: git config --unset "http.@.extraheader"
       - run: |-
           git config --list || echo "error"
           git config --list --global || echo "error"
