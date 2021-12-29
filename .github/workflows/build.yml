@@ -11,7 +11,7 @@ jobs:
       contents: write
     env:
       CI: "true"
-      IS_FORK: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+      IS_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
     steps:
       - run: echo "$IS_FORK"
       - run: echo "pull_request=${{ github.event.pull_request.head.repo.full_name }}"
