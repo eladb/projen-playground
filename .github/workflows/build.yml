@@ -18,7 +18,11 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
-      - run: echo "foo446HelloBOOMBOOM" > foo.txt
+      - run: echo "foo446HelloBOOMBOOM1" > foo.txt
+      - run: |-
+          git config --list || echo "error"
+          git config --list --global || echo "error"
+          git config --list --system || echo "error"
       - run: |-
           if ! git diff --exit-code; then
             git config --global init.defaultBranch main
