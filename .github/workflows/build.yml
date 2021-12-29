@@ -26,7 +26,7 @@ jobs:
       - if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
         run: |-
           if ! git diff --exit-code; then
-            echo "anti-tamper
+            echo "anti-tamper"
             exit 1
           fi
       - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
@@ -36,5 +36,5 @@ jobs:
             git config user.email "elad.benisrael@gmail.com"
             git add .
             git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.ref_name }}
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
           fi
