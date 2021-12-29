@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
     env:
       CI: "true"
       TOKEN: ${{ secrets.PROJEN_GITHUB_TOKEN }}
