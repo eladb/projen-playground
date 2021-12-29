@@ -17,7 +17,7 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
-          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
       - run: echo "foo446HelloBOOMBOOM2BAAAM" > foo.txt
       - run: |-
           if ! git diff --exit-code; then
