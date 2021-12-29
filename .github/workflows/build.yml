@@ -31,11 +31,12 @@ jobs:
         run: |-
           git add .
           git commit -m "chore: self mutation"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: ${{ github.event.pull_request.head.ref }}
-          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+      - name: push
+        run: git push https://boom:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git HEAD:${{ github.event.pull_request.head.ref }}
+
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          branch: ${{ github.event.pull_request.head.ref }}
+#          github_token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           
-#          git remote set-url origin https://${GITHUB_ACTOR}:${TOKEN}@github.com/${{ github.event.pull_request.head.repo.full_name }}.git
- #         git push origin HEAD:${{ github.event.pull_request.head.ref }}
