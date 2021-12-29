@@ -20,7 +20,7 @@ jobs:
           repository: ${{ github.repository }}
       - run: echo "foo446HelloBOOMBOOM" > foo.txt
       - run: |-
-          if git diff --exit-code; then
+          if ! git diff --exit-code; then
             git config --global init.defaultBranch main
             git config user.name "Elad Ben-Israel"
             git config user.email "elad.benisrael@gmail.com"
