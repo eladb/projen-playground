@@ -13,7 +13,9 @@ jobs:
       CI: "true"
       IS_FORK: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     steps:
-      - run: echo $IS_FORK
+      - run: echo "$IS_FORK"
+      - run: echo "pull_request=${{ github.event.pull_request.head.repo.full_name }}"
+      - run: echo "github.repository=${{ github.repository }}"
       - name: Checkout
         uses: actions/checkout@v2
         with:
