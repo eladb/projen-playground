@@ -20,7 +20,12 @@ jobs:
           repository: ${{ github.repository }}
       - run: echo "foo446HelloBOOMBOOM1" > foo.txt
 #      - run: git config --unset "http.@.extraheader"
-      - run: ls -1 /home/runner/work/_temp | xargs cat
+      - run: |-
+           cd /home/runner/work/_temp
+           for f in *; do
+             echo "------ $f"
+             cat $f
+           done
       - run: |-
           git config --list || echo "error"
           git config --list --global || echo "error"
