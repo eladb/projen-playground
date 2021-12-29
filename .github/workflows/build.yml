@@ -12,8 +12,10 @@ jobs:
     env:
       CI: "true"
       IS_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+      NOT_IS_FORK: ${{ !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
       - run: echo "$IS_FORK"
+      - run: echo "$NOT_IS_FORK"
       - run: echo "pull_request=${{ github.event.pull_request.head.repo.full_name }}"
       - run: echo "github.repository=${{ github.repository }}"
       - name: Checkout
