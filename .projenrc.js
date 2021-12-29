@@ -1,66 +1,32 @@
-const { TypeScriptProject } = require('projen');
-const { JobPermission } = require('projen/lib/github/workflows-model');
+const { typescript, Component } = require('projen');
 
-const project = new TypeScriptProject({
+const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: 'projen-playground',
-  description: 'hello, projen3',
+  name: '@eladb/projen-playground',
+  repository: 'https://github.com/eladb/projen-playground.git',
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
-  mergify: false,
+  releaseToNpm: true,
+  npmRegistryUrl: 'http://npm.pkg.github.com/',
+  minNodeVersion: '16.0.0',
 });
 
-const autolabel = project.github.addWorkflow('automerge-label');
-autolabel.on({ pullRequestTarget: {} });
-autolabel.addJobs({
-  add_merge_label: {
-    runsOn: 'ubuntu-latest',
-    permissions: {
-      pullRequests: JobPermission.WRITE,
-      contents: JobPermission.WRITE,
-    },
-    steps: [
-      {
-        run: 'gh pr edit ${{ github.event.pull_request.number }} --add-label automerge --repo ${{ github.event.repository.full_name }}',
-        env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-        },
-      },
-    ],
-  },
-});
+class UpgradePatch extends Component {
+  postSynthesize() {
+    debugger;
+    console.log('there');
+    const upgradeWorkflow = project.tryFindObjectFile('.github/workflows/upgrade-main.yml');
+    upgradeWorkflow.addOverride('jobs.pr.permissions.actions', 'write');
+    upgradeWorkflow.addOverride('jobs.upgrade.steps.5', { run: 'echo "noop"' });
+    upgradeWorkflow.addOverride('jobs.pr.steps.5', {
+      name: 'Trigger build workflow',
+      if: "steps.create-pr.outputs.pull-request-url != ''",
+      run: 'curl --fail -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches -d "{\\"ref\\":\\"$GITHUB_REF_NAME\\"}"',
+    });
+    upgradeWorkflow.synthesize();
+  }
+}
 
-const automerge = project.github.addWorkflow('automerge');
+new UpgradePatch(project);
 
-automerge.on({
-  pullRequestTarget: { types: ['labeled', 'unlabeled', 'synchronize', 'opened', 'edited', 'ready_for_review', 'reopened', 'unlabeled'] },
-  pullRequestReview: { types: ['submitted'] },
-  checkRun: { types: ['completed'] },
-  status: {},
-});
-
-automerge.addJobs({
-  automerge: {
-    runsOn: 'ubuntu-latest',
-    permissions: {
-      contents: JobPermission.WRITE,
-      pullRequests: JobPermission.WRITE,
-      checks: JobPermission.WRITE,
-      statuses: JobPermission.WRITE,
-    },
-    steps: [
-      {
-        name: 'automerge',
-        uses: 'pascalgn/automerge-action@v0.14.2',
-        env: {
-          MERGE_METHOD: 'squash',
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-          MERGE_COMMIT_MESSAGE: 'pull-request-title-and-description',
-          MERGE_COMMIT_MESSAGE_REGEX: '(.*)^---',
-          MERGE_DELETE_BRANCH: 'true',
-        },
-      },
-    ],
-  },
-});
 
 project.synth();
