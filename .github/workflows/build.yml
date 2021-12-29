@@ -2,7 +2,7 @@
 
 name: build
 on:
-  push: {}
+  pull_request: {}
   workflow_dispatch: {}
 jobs:
   build:
@@ -19,10 +19,9 @@ jobs:
           ref: ${{ github.ref_name }}
           repository: ${{ github.repository }}
           token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
-      - run: echo "foo446HelloBOOMBOOM2" > foo.txt
+      - run: echo "foo446HelloBOOMBOOM2BAAAM" > foo.txt
       - run: |-
           if ! git diff --exit-code; then
-            git config --global init.defaultBranch main
             git config user.name "Elad Ben-Israel"
             git config user.email "elad.benisrael@gmail.com"
             git add .
