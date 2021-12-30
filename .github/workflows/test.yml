@@ -9,10 +9,10 @@ jobs:
         run: echo "::set-output name=my_output::true"
       - run: exit 1
     outputs: 
-      my_output: ${{ steps.my_step.my_output }}
+      my_output: ${{ steps.my_step.outputs.my_output }}
   self-mutation:
     runs-on: ubuntu-latest
     needs: build
-    if: always() && needs.build.outputs.my_output
+    if: ${{ always() && needs.build.outputs.my_output }}
     steps:
       - run: echo "hello world"
