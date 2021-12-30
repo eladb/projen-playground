@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - id: my_step
-        run: echo "::set-output name=my_output::true"
+#      - id: my_step
+#        run: echo "::set-output name=my_output::true"
       - run: exit 1
     outputs: 
       my_output: ${{ steps.my_step.outputs.my_output }}
