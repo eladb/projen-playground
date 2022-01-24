@@ -9,34 +9,67 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: "true"
-      IS_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
-      NOT_IS_FORK: ${{ !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
-      - run: echo "$IS_FORK"
-      - run: echo "$NOT_IS_FORK"
-      - run: echo "pull_request=${{ github.event.pull_request.head.repo.full_name }}"
-      - run: echo "github.repository=${{ github.repository }}"
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          token: ${{ secrets.PROJEN_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-      - run: echo "foo446HelloBOOMBOOM2BAAAM" > foo.txt
-      - if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.2.0
+        with:
+          node-version: 16.0.0
+      - name: Install dependencies
+        run: yarn install --check-files
+      - name: build
+        run: npx projen build
+      - id: self_mutation
+        name: Find mutations
         run: |-
-          if ! git diff --exit-code; then
-            echo "anti-tamper"
-            exit 1
-          fi
-      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+          git add .
+          git diff --staged --patch --exit-code > .repo.patch || echo "::set-output name=self_mutation_happened::true"
+      - if: steps.self_mutation.outputs.self_mutation_happened
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
+      - name: Fail build on mutation
+        if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
-          if ! git diff --exit-code; then
-            git config user.name "Elad Ben-Israel"
-            git config user.email "elad.benisrael@gmail.com"
+          echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+          cat .repo.patch
+          exit 1
+  self-mutation:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Set git identity
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+      - name: Push changes
+        run: |2-
             git add .
-            git commit -m "chore: self mutation"
+            git commit -s -m "chore: self mutation"
             git push origin HEAD:${{ github.event.pull_request.head.ref }}
-          fi
