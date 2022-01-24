@@ -7,36 +7,5 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    env:
-      CI: "true"
-      IS_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
-      NOT_IS_FORK: ${{ !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
-      - run: echo "$IS_FORK"
-      - run: echo "$NOT_IS_FORK"
-      - run: echo "pull_request=${{ github.event.pull_request.head.repo.full_name }}"
-      - run: echo "github.repository=${{ github.repository }}"
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          token: ${{ secrets.PROJEN_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
-      - run: echo "foo446HelloBOOMBOOM2BAAAM" > foo.txt
-      - if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
-        run: |-
-          if ! git diff --exit-code; then
-            echo "anti-tamper"
-            exit 1
-          fi
-      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-        run: |-
-          if ! git diff --exit-code; then
-            git config user.name "Elad Ben-Israel"
-            git config user.email "elad.benisrael@gmail.com"
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-          fi
+      - run: echo "${{ toJSON(github) }}"
