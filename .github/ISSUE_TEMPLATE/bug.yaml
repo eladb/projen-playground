@@ -17,9 +17,9 @@ body:
 - type: textarea
   id: what-did-you-expect
   attributes:
-    label: "Expected:"
+    label: "I expected this:"
     description: What did you expect to happen?
-    placeholder: Tell us what you expected to see!
+    placeholder: Tell us what you expected to see
   validations:
     required: true
 - type: textarea
@@ -27,7 +27,7 @@ body:
   attributes:
     label: "Instead, this happened:"
     description: What happend instead of what you've expected?
-    placeholder: Tell us what did you see!
+    placeholder: Tell us what did you see
   validations:
     required: true
 - type: dropdown
