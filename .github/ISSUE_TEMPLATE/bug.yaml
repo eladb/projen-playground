@@ -21,31 +21,28 @@ body:
   id: i-tried-this
   attributes:
     label: "I tried this:"
-    description: "What did you try to do?"
-    placeholder: Code/explanation to reproduce bug
+    placeholder: "What did you try to do? A code snippet or exact command line is ideal."
   validations:
     required: true
 - type: textarea
   id: what-did-you-expect
   attributes:
     label: "I expected this:"
-    description: "What did you expect to happen?"
-    placeholder: Tell us what you expected to see
+    placeholder: "What did you expect to happen? Describe the output or behavior you expected to see."
   validations:
     required: true
 - type: textarea
   id: instead-what-happened
   attributes:
     label: "Instead, this happened:"
-    description: "What happend instead of what you've expected?"
-    placeholder: Tell us what did you see
+    placeholder: "What happend instead of what you've expected?"
   validations:
     required: true
 - type: dropdown
   id: Component
   attributes:
     label: "Component:"
-    description: "Which component is this related to? (one or more)"
+    description: "Which component in the toolchain is this related to? (one or more)"
     multiple: true
     options:
     - Language Design
