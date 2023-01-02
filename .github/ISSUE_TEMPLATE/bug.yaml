@@ -59,12 +59,12 @@ body:
   id: node
   attributes:
     label: "Node.js Version:"
-    desciprion: "Version of Node.js in your system: `node --version`
+    desciprion: Version of Node.js in your system: `node --version`
 - type: checkboxes
   id: platform
   attributes:
     label: "Platform:"
-    description: "Which operating system are you using?"
+    description: Which operating system are you using?
     options:
       - label: "MacOS"
       - label: "Linux"
