@@ -23,8 +23,7 @@ body:
     label: Feature Spec
     description:
     placeholder: |
-      Describe the feature as if it was already released:
-      Write a hypothetical doc/readme/changelog/contributing section for this new enhancement, code snippets and all.
+      Describe the feature as if it was already released. Write a hypothetical doc/readme/changelog/contributing section for this new enhancement, code snippets and all.
   validations:
     required: true
 - type: textarea
