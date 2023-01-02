@@ -64,16 +64,18 @@ body:
   attributes:
     label: "Node.js Version:"
     description: "Which Node.js version are you using (`node --version`)?"
-- type: checkboxes
+- type: dropdown
   id: platform
   attributes:
     label: "Platform:"
     description: "Which operating system are you using?"
+    multiple: true
     options:
-      - label: "MacOS"
-      - label: "Linux"
-      - label: "Windows"
-      - label: "Other"
+      - MacOS
+      - Linux
+      - Windows
+      - All
+      - Other
 - type: textarea
   attributes:
     label: Anything else?
