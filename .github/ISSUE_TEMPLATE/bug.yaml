@@ -57,7 +57,7 @@ body:
 - type: markdown
   attributes:
     value: |
-       ## Environment
+       # Environment
 - type: dropdown
   id: platform
   attributes:
@@ -83,7 +83,7 @@ body:
 - type: markdown
   attributes:
     value: |
-       ## Additional Information
+       # Additional Information
 - type: textarea
   attributes:
     label: Anything else?
