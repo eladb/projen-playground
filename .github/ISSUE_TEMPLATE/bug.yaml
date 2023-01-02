@@ -77,12 +77,12 @@ body:
   id: version
   attributes:
     label: "Wing Version:"
-    description: "Which Wing version are you using (`wing --version`)?"
+    placeholder: "wing --version"
 - type: input
   id: node
   attributes:
     label: "Node.js Version:"
-    description: "Which Node.js version are you using (`node --version`)?"
+    placeholder: "node --version"
 - type: textarea
   attributes:
     label: Anything else?
