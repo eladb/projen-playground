@@ -5,7 +5,7 @@ body:
 - type: markdown
   attributes:
     value: |
-       ### :pray: Thanks for taking the time to fill out this bug report! 
+       ### Thanks for taking the time to fill out this bug report! :pray: 
        Feel free to ping us on [Wing Slack](https://t.winglang.io/slack) if you have any questions or need help.
 - type: textarea
   id: i-tried-this
