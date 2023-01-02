@@ -59,7 +59,7 @@ body:
   id: node
   attributes:
     label: "Node.js Version:"
-    desciprion: "Version of Node.js in your system: `node --version`"
+    description: "Version of Node.js in your system: `node --version`"
 - type: checkboxes
   id: platform
   attributes:
