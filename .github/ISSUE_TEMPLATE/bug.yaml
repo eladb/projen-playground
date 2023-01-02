@@ -54,16 +54,10 @@ body:
     - Contributor Experience
   validations:
     required: true
-- type: input
-  id: version
+- type: markdown
   attributes:
-    label: "Wing Version:"
-    description: "Which Wing version are you using (`wing --version`)?"
-- type: input
-  id: node
-  attributes:
-    label: "Node.js Version:"
-    description: "Which Node.js version are you using (`node --version`)?"
+    value: |
+       ## Environment
 - type: dropdown
   id: platform
   attributes:
@@ -76,6 +70,20 @@ body:
       - Windows
       - All
       - Other
+- type: input
+  id: version
+  attributes:
+    label: "Wing Version:"
+    description: "Which Wing version are you using (`wing --version`)?"
+- type: input
+  id: node
+  attributes:
+    label: "Node.js Version:"
+    description: "Which Node.js version are you using (`node --version`)?"
+- type: markdown
+  attributes:
+    value: |
+       ## Additional Information
 - type: textarea
   attributes:
     label: Anything else?
