@@ -7,6 +7,14 @@ body:
     value: |
        :pray: Thanks for taking the time to fill out this bug report! Feel free to ping us on [Wing Slack](https://t.winglang.io/slack) if you have any questions or need help.
 - type: textarea
+  attributes:
+    label: Community Note
+    description: Please keep this note for the community
+    text: |
+      - Please vote on this issue by adding a 👍 [reaction](https://blog.github.com/2016-03-10-add-reactions-to-pull-requests-issues-and-comments/) to the original issue to help the community and maintainers prioritize this request
+      - Please do not leave "+1" or other comments that do not add relevant new information or questions, they generate extra noise for issue followers and do not help prioritize the request
+      - If you are interested in working on this issue or have submitted a pull request, please leave a comment  
+- type: textarea
   id: i-tried-this
   attributes:
     label: "I tried this:"
