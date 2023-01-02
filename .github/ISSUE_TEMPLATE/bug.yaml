@@ -9,7 +9,7 @@ body:
 - type: textarea
   attributes:
     label: Community Note
-    description: Please keep this note for the community
+    description: Please keep this note for the community:
     value: |
       - Please vote by adding a 👍 reaction to the issue to help us prioritize
       - If you are interested to work on this issue, please leave a comment :pray:
@@ -58,17 +58,17 @@ body:
   id: version
   attributes:
     label: "Wing Version:"
-    description: The output of `wing --version`
+    description: "Which Wing version are you using (`wing --version`)?"
 - type: input
   id: node
   attributes:
     label: "Node.js Version:"
-    description: "Version of Node.js in your system: `node --version`"
+    description: "Which Node.js version are you using (`node --version`)?"
 - type: checkboxes
   id: platform
   attributes:
     label: "Platform:"
-    description: Which operating system are you using?
+    description: "Which operating system are you using?"
     options:
       - label: "MacOS"
       - label: "Linux"
