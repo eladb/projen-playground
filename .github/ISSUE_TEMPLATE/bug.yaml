@@ -83,10 +83,6 @@ body:
   attributes:
     label: "Node.js Version:"
     description: "Which Node.js version are you using (`node --version`)?"
-- type: markdown
-  attributes:
-    value: |
-       ## Additional Information
 - type: textarea
   attributes:
     label: Anything else?
