@@ -11,10 +11,8 @@ body:
     label: Community Note
     description: "Please keep this note for the community:"
     value: |
-      - Please vote by adding a 👍 reaction to the issue to help us prioritize
-      - If you are interested to work on this issue, please leave a comment :heart:
-      
-      ---
+      > Please vote by adding a 👍 reaction to the issue to help us prioritize.
+      > If you are interested to work on this issue, please leave a comment.
 - type: textarea
   id: i-tried-this
   attributes:
