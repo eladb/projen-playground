@@ -58,20 +58,11 @@ body:
     - Contributor Experience
   validations:
     required: true
+
 - type: markdown
   attributes:
     value: |
        ## Environment
-- type: dropdown
-  id: platform
-  attributes:
-    label: "Platform(s):"
-    multiple: true
-    options:
-      - MacOS
-      - Linux
-      - Windows
-      - Other
 - type: input
   id: version
   attributes:
@@ -82,6 +73,22 @@ body:
   attributes:
     label: "Node.js Version:"
     placeholder: "node --version"
+- type: dropdown
+  id: platform
+  attributes:
+    label: "Platform(s):"
+    multiple: true
+    options:
+      - MacOS
+      - Linux
+      - Windows
+      - Other
+
+- type: markdown
+  attributes:
+    value: |
+       ## Misc
+
 - type: textarea
   attributes:
     label: Anything else?
