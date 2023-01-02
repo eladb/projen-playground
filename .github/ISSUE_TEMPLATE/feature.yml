@@ -14,8 +14,9 @@ body:
       > Please vote by adding a 👍 reaction to the issue to help us prioritize.
       > If you are interested to work on this issue, please leave a comment.
 - type: markdown
-  attributes: |
-    ## Enhancement Request
+  attributes:
+    value: |
+      ## Enhancement Request
 - type: textarea
   id: spec
   attributes:
