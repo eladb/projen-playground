@@ -7,8 +7,8 @@ body:
     value: |
        ### Thanks for taking the time to fill out this bug report!
        Feel free to ping us on [Wing Slack](https://t.winglang.io/slack) if you have any questions or need help.
-       ---
-       
+
+        ---
 - type: textarea
   id: i-tried-this
   attributes:
