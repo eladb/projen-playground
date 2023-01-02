@@ -18,7 +18,8 @@ body:
   attributes:
     label: Feature Spec
     description: "Describe the feature as if it was already released:"
-    placeholder: Write a hypothetical readme/changelog/contributing guide section for this new enhancement, code snippets and all
+    placeholder: |
+      Write a hypothetical doc/readme/changelog/contributing section for this new enhancement, code snippets and all.
   validations:
     required: true
 - type: textarea
@@ -26,7 +27,8 @@ body:
   attributes:
     label: Use Cases
     description: "What problems does this solves?"
-    placeholder: List of use cases for this enhancement
+    placeholder: |
+      List of use cases this feature or enhancement is designed to address.
   validations:
     required: true
 - type: textarea
@@ -34,7 +36,8 @@ body:
   attributes:
     label: Implementation Notes
     description: "Any thoughts regarding how this should be implemented?"
-    placeholder: Ideas, references, pointers, thoughts
+    placeholder: |
+      Ideas, references, pointers, thoughts...
 - type: dropdown
   id: Component
   attributes:
@@ -51,4 +54,4 @@ body:
     - Development Environment
     - Contributor Experience
   validations:
-    required: true
+    required: false
